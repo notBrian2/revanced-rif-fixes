@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-30T05:57:55",
-  "description": "**Now supports the free rif is fun app** (`com.andrewshu.android.reddit`) as well as golden platinum. The same bundle and link work for both.\n\nAdd it in ReVanced Manager as a remote patch bundle:\n`https://raw.githubusercontent.com/notBrian2/revanced-rif-fixes/main/bundles/stable.json`\n\nPatches: Fix Reddit galleries, Fix load more comments, Fix Redgifs, Fix imgur album thumbnails, Fix imgur title links. Patch your **original** rif 5.6.22 APK (free or golden platinum) together with the official **Spoof client** patch, and MojiRS's rif patches if you like (they include Disable ads for the free app). Golden platinum results are unchanged from v1.0.1.",
-  "download_url": "https://github.com/notBrian2/revanced-rif-fixes/releases/download/v1.1.0/patches.rvp",
+  "created_at": "2026-11-02T03:08:53",
+  "description": "**Fixed:** tapping \"load more comments\" on a row whose comments were removed or deleted no longer shows \"Reddit no longer lets rif load these comments\" and leaves the row spinning. The row now goes away and rif shows its own \"no more comments\" toast ([#2](https://github.com/notBrian2/revanced-rif-fixes/issues/2)).\n\nAdd it in ReVanced Manager as a remote patch bundle:\n`https://raw.githubusercontent.com/notBrian2/revanced-rif-fixes/main/bundles/stable.json`\n\nPatch your **original** rif 5.6.22 APK (free or golden platinum) together with the official **Spoof client** patch, and MojiRS's rif patches if you like.\n",
+  "download_url": "https://github.com/notBrian2/revanced-rif-fixes/releases/download/v1.1.1/patches.rvp",
   "signature_download_url": "N/A",
-  "version": "v1.1.0"
+  "version": "v1.1.1"
 }
