@@ -146,7 +146,7 @@ public final class Reddit {
         JSONArray things = new JSONArray();
         JSONArray top = new JSONArray(text).getJSONObject(1).getJSONObject("data").getJSONArray("children");
         int comments = walk(top, parent, wanted, shown, things);
-        if (comments == 0) {
+        if (comments == 0 && hasMoreUnder(top, parent)) {
             // Nothing new within Reddit's 500-comment window (bottom of a huge thread). Say so instead of
             // handing rif the same "load more" again.
             return "{\"json\":{\"errors\":[[\"RIF_FIXES\",\"Reddit no longer lets rif load these comments\","
@@ -196,6 +196,35 @@ public final class Reddit {
             }
         }
         return added;
+    }
+
+    /**
+     * Whether Reddit held back comments directly under the parent. If not, the asked-for comments are gone (removed
+     * or deleted): empty things make rif drop the row and show its own "no more comments" toast. "more" objects
+     * elsewhere in the reply don't count: a top-level fetch has plenty under other comments.
+     */
+    private static boolean hasMoreUnder(JSONArray children, String parent) {
+        for (int i = 0; i < children.length(); i++) {
+            JSONObject child = children.optJSONObject(i);
+            JSONObject data = child == null ? null : child.optJSONObject("data");
+            if (data == null) {
+                continue;
+            }
+            if ("more".equals(child.optString("kind"))) {
+                JSONArray ids = data.optJSONArray("children");
+                if (parent.equals(data.optString("parent_id")) && ids != null && ids.length() > 0) {
+                    return true;
+                }
+                continue;
+            }
+            JSONObject replies = data.optJSONObject("replies");
+            JSONArray sub = replies == null || replies.optJSONObject("data") == null
+                    ? null : replies.optJSONObject("data").optJSONArray("children");
+            if (sub != null && hasMoreUnder(sub, parent)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean overlaps(JSONArray ids, Set<String> wanted) {
